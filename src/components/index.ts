@@ -1,4 +1,5 @@
 export { Header } from './Header'
+export { Footer } from './Footer'
 export { BentoGrid } from './BentoGrid'
 export { Lightbox } from './Lightbox'
 export { GalleryHeader } from './GalleryHeader'

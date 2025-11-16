@@ -264,7 +264,7 @@ function Index() {
                                 />
 
                                 {/* Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                                 {/* Info */}
                                 <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
@@ -301,7 +301,7 @@ function Index() {
                         {speciesCategories.map((category, idx) => (
                             <div
                                 key={idx}
-                                className={`group p-8 rounded-2xl bg-gradient-to-br ${category.color} border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer`}
+                                className={`group p-8 rounded-2xl bg-linear-to-br ${category.color} border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer`}
                             >
                                 <div className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">{category.icon}</div>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-2">{category.name}</h3>
@@ -316,7 +316,7 @@ function Index() {
             </section>
 
             {/* Contribution Section */}
-            <section className="py-24 px-6 sm:px-8 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
+            <section className="py-24 px-6 sm:px-8 bg-linear-to-br from-gray-900 via-gray-800 to-black text-white">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl sm:text-5xl font-bold mb-4">
@@ -342,7 +342,7 @@ function Index() {
 
                                 {/* Connector line */}
                                 {idx < contributionSteps.length - 1 && (
-                                    <div className="hidden lg:block absolute top-6 left-20 w-12 h-0.5 bg-gradient-to-r from-white/20 to-transparent" />
+                                    <div className="hidden lg:block absolute top-6 left-20 w-12 h-0.5 bg-linear-to-r from-white/20 to-transparent" />
                                 )}
                             </div>
                         ))}
@@ -356,68 +356,6 @@ function Index() {
                     </div>
                 </div>
             </section>
-
-            {/* Footer */}
-            <footer className="bg-gray-900 text-gray-300 py-16 px-6 sm:px-8">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
-                        {/* Brand */}
-                        <div className="md:col-span-1">
-                            <h3 className="text-white font-bold text-lg mb-4">LifeAtlas</h3>
-                            <p className="text-sm text-gray-400">
-                                The world's open visual archive of wildlife.
-                            </p>
-                        </div>
-
-                        {/* Links */}
-                        <div>
-                            <h4 className="text-white font-semibold mb-4">Explore</h4>
-                            <ul className="space-y-3 text-sm">
-                                <li><a href="#" className="hover:text-white transition-colors">Gallery</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Species Index</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Collections</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Community */}
-                        <div>
-                            <h4 className="text-white font-semibold mb-4">Community</h4>
-                            <ul className="space-y-3 text-sm">
-                                <li><a href="#" className="hover:text-white transition-colors">Contribute</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Community Forum</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Leaderboard</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Resources */}
-                        <div>
-                            <h4 className="text-white font-semibold mb-4">Resources</h4>
-                            <ul className="space-y-3 text-sm">
-                                <li><a href="#" className="hover:text-white transition-colors">Conservation Partners</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Research Programs</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                            </ul>
-                        </div>
-
-                        {/* Legal */}
-                        <div>
-                            <h4 className="text-white font-semibold mb-4">Legal</h4>
-                            <ul className="space-y-3 text-sm">
-                                <li><a href="#" className="hover:text-white transition-colors">About</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Privacy</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {/* Divider */}
-                    <div className="border-t border-gray-700 pt-8">
-                        <p className="text-sm text-gray-400 text-center">
-                            © {new Date().getFullYear()} LifeAtlas. All rights reserved. Preserving biodiversity through collaborative photography.
-                        </p>
-                    </div>
-                </div>
-            </footer>
 
             {/* CSS for animations */}
             <style>{`
