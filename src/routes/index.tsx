@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import { StatsSection } from '../components'
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -84,28 +84,6 @@ const contributionSteps = [
         description: 'Support conservation efforts and scientific research',
     },
 ]
-
-// Counter component with animation
-function AnimatedCounter({ target }: { target: number }) {
-    const [count, setCount] = useState(0)
-
-    useEffect(() => {
-        let current = 0
-        const increment = target / 50
-        const timer = setInterval(() => {
-            current += increment
-            if (current >= target) {
-                setCount(target)
-                clearInterval(timer)
-            } else {
-                setCount(Math.floor(current))
-            }
-        }, 30)
-        return () => clearInterval(timer)
-    }, [target])
-
-    return <span>{count.toLocaleString()}+</span>
-}
 
 function Index() {
     return (
@@ -206,35 +184,7 @@ function Index() {
             </section>
 
             {/* Community Stats Section */}
-            <section className="py-20 px-6 sm:px-8 bg-white">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                        {/* Stat 1 */}
-                        <div className="text-center">
-                            <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-2">
-                                <AnimatedCounter target={1800000} />
-                            </div>
-                            <p className="text-lg text-gray-600">Wildlife Images</p>
-                        </div>
-
-                        {/* Stat 2 */}
-                        <div className="text-center">
-                            <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-2">
-                                <AnimatedCounter target={220} />
-                            </div>
-                            <p className="text-lg text-gray-600">Countries Covered</p>
-                        </div>
-
-                        {/* Stat 3 */}
-                        <div className="text-center">
-                            <div className="text-5xl sm:text-6xl font-bold text-gray-900 mb-2">
-                                <AnimatedCounter target={30000} />
-                            </div>
-                            <p className="text-lg text-gray-600">Active Contributors</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <StatsSection />
 
             {/* Image Showcase Grid - Pinterest Style */}
             <section className="py-24 px-6 sm:px-8 bg-gray-50">
