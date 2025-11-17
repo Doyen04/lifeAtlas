@@ -109,7 +109,7 @@ function Index() {
                         Discover the Wildlife of Every Continent.
                     </h1>
                     <p className="text-base sm:text-lg md:text-xl text-gray-100 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed">
-                        LifeAtlas is the world's open visual archive of animals — powered by people like you.
+                        LifeAtlas is the world's open visual archive of animals - powered by people like you.
                     </p>
 
                     {/* CTA Buttons */}
