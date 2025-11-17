@@ -1,61 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { StatsSection } from '../components'
+import { MOCK_GALLERY_IMAGES } from '../utils/galleryUtil'
 
 export const Route = createFileRoute('/')({
     component: Index,
 })
-
-// Sample wildlife images data
-const wildlifeImages = [
-    {
-        id: 1,
-        species: 'Bengal Tiger',
-        country: 'India',
-        imageUrl: 'https://images.pexels.com/photos/3625154/pexels-photo-3625154.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 2,
-        species: 'African Elephant',
-        country: 'Kenya',
-        imageUrl: 'https://images.pexels.com/photos/2317904/pexels-photo-2317904.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 3,
-        species: 'Mountain Gorilla',
-        country: 'Uganda',
-        imageUrl: 'https://images.pexels.com/photos/3551632/pexels-photo-3551632.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 4,
-        species: 'Polar Bear',
-        country: 'Arctic',
-        imageUrl: 'https://images.pexels.com/photos/3951656/pexels-photo-3951656.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 5,
-        species: 'Giant Panda',
-        country: 'China',
-        imageUrl: 'https://images.pexels.com/photos/3714896/pexels-photo-3714896.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 6,
-        species: 'Snow Leopard',
-        country: 'Nepal',
-        imageUrl: 'https://images.pexels.com/photos/2649904/pexels-photo-2649904.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 7,
-        species: 'Sea Turtle',
-        country: 'Indonesia',
-        imageUrl: 'https://images.pexels.com/photos/3889865/pexels-photo-3889865.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-    {
-        id: 8,
-        species: 'Scarlet Macaw',
-        country: 'Brazil',
-        imageUrl: 'https://images.pexels.com/photos/50581/pexels-photo-50581.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2',
-    },
-]
 
 const speciesCategories = [
     { name: 'Birds', count: '45,230', icon: 'BIRDS', color: 'from-blue-50 to-cyan-50' },
@@ -200,7 +149,7 @@ function Index() {
 
                     {/* Masonry Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-max">
-                        {wildlifeImages.map((image, idx) => (
+                        {MOCK_GALLERY_IMAGES.slice(0, 8).map((image, idx) => (
                             <div
                                 key={image.id}
                                 className={`group relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer ${idx % 4 === 0 ? 'md:row-span-2' : ''
@@ -208,7 +157,7 @@ function Index() {
                             >
                                 {/* Image */}
                                 <img
-                                    src={image.imageUrl}
+                                    src={image.url}
                                     alt={image.species}
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                 />
