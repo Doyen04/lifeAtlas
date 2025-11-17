@@ -1,5 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { StatsSection } from '../components'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { StatsSection, GlobalMap } from '../components'
 import { MOCK_GALLERY_IMAGES } from '../utils/galleryUtil'
 
 export const Route = createFileRoute('/')({
@@ -8,11 +8,11 @@ export const Route = createFileRoute('/')({
 
 const speciesCategories = [
     { name: 'Birds', count: '45,230', icon: 'BIRDS', color: 'from-blue-50 to-cyan-50' },
-    { name: 'Mammals', count: '38,920', icon: 'MAMMALS', color: 'from-amber-50 to-orange-50' },
-    { name: 'Reptiles', count: '22,140', icon: 'REPTILES', color: 'from-green-50 to-emerald-50' },
-    { name: 'Amphibians', count: '18,550', icon: 'AMPHIBIANS', color: 'from-lime-50 to-green-50' },
-    { name: 'Insects', count: '61,890', icon: 'INSECTS', color: 'from-pink-50 to-rose-50' },
-    { name: 'Marine Life', count: '29,670', icon: 'MARINE', color: 'from-indigo-50 to-blue-50' },
+    { name: 'Mammals', count: '38,920', icon: 'MAMMALS', color: 'from-orange-50 to-amber-50' },
+    { name: 'Reptiles', count: '22,140', icon: 'REPTILES', color: 'from-emerald-50 to-teal-50' },
+    { name: 'Amphibians', count: '18,550', icon: 'AMPHIBIANS', color: 'from-teal-50 to-cyan-50' },
+    { name: 'Insects', count: '61,890', icon: 'INSECTS', color: 'from-purple-50 to-indigo-50' },
+    { name: 'Marine Life', count: '29,670', icon: 'MARINE', color: 'from-cyan-50 to-blue-50' },
 ]
 
 const contributionSteps = [
@@ -35,6 +35,7 @@ const contributionSteps = [
 ]
 
 function Index() {
+    const navigate = useNavigate()
     return (
         <main className="w-full bg-white">
             {/* Hero Section */}
@@ -63,10 +64,10 @@ function Index() {
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
-                        <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base">
+                        <button onClick={() => navigate({ to: '/upload' })} className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors duration-200 shadow-lg hover:shadow-xl text-sm sm:text-base">
                             Upload Wildlife Image
                         </button>
-                        <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-black/50 backdrop-blur-sm text-white font-medium rounded-full border border-white/30 hover:bg-black/70 transition-colors duration-200 text-sm sm:text-base">
+                        <button onClick={() => navigate({ to: '/gallery' })} className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-black/50 backdrop-blur-sm text-white font-medium rounded-full border border-white/30 hover:bg-black/70 transition-colors duration-200 text-sm sm:text-base">
                             Explore Species
                         </button>
                     </div>
@@ -92,43 +93,8 @@ function Index() {
                         </p>
                     </div>
 
-                    {/* Map Placeholder with Glowing Hotspots */}
-                    <div className="relative w-full aspect-video bg-linear-to-b from-blue-100 to-blue-50 rounded-2xl overflow-hidden shadow-xl">
-                        <svg className="w-full h-full" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-                            {/* World Map Background */}
-                            <rect width="1000" height="600" fill="#e0f2fe" />
-
-                            {/* Animated Hotspots */}
-                            {[
-                                { x: 200, y: 150, label: 'Africa' },
-                                { x: 600, y: 180, label: 'Asia' },
-                                { x: 400, y: 350, label: 'South America' },
-                                { x: 750, y: 100, label: 'Arctic' },
-                            ].map((spot, i) => (
-                                <g key={i}>
-                                    {/* Glow effect */}
-                                    <circle
-                                        cx={spot.x}
-                                        cy={spot.y}
-                                        r="40"
-                                        fill="rgba(34, 197, 94, 0.1)"
-                                        style={{
-                                            animation: `pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite`,
-                                            animationDelay: `${i * 0.3}s`,
-                                        }}
-                                    />
-                                    {/* Center dot */}
-                                    <circle cx={spot.x} cy={spot.y} r="8" fill="#22c55e" />
-                                </g>
-                            ))}
-                        </svg>
-
-                        {/* Stats overlay */}
-                        <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                            <p className="text-sm font-semibold text-gray-900">Active Uploads</p>
-                            <p className="text-2xl font-bold text-green-600">2,847</p>
-                        </div>
-                    </div>
+                    {/* Global Map Component */}
+                    <GlobalMap />
                 </div>
             </section>
 
@@ -215,41 +181,52 @@ function Index() {
             </section>
 
             {/* Contribution Section */}
-            <section className="py-24 px-6 sm:px-8 bg-linear-to-br from-gray-900 via-gray-800 to-black text-white">
+            <section className="py-24 px-6 sm:px-8 bg-linear-to-br from-emerald-50 to-white">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+                        <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900">
                             Anyone Can Contribute to LifeAtlas
                         </h2>
-                        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                             Whether you're a professional photographer or nature enthusiast, your images help advance conservation and research.
                         </p>
                     </div>
 
                     {/* Steps Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                        {contributionSteps.map((step, idx) => (
-                            <div key={idx} className="relative">
-                                {/* Step number */}
-                                <div className="inline-flex items-center justify-center w-12 h-12 bg-white/10 rounded-full border border-white/20 mb-4">
-                                    <span className="text-xl font-bold">{idx + 1}</span>
+                        {contributionSteps.map((step, idx) => {
+                            // Color scheme matching your map hotspots (excluding red)
+                            const stepColors = [
+                                { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600', number: 'bg-orange-100 text-orange-700', line: 'from-orange-200 to-transparent' },
+                                { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600', number: 'bg-emerald-100 text-emerald-700', line: 'from-emerald-200 to-transparent' },
+                                { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-600', number: 'bg-cyan-100 text-cyan-700', line: 'from-cyan-200 to-transparent' },
+                                { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600', number: 'bg-blue-100 text-blue-700', line: 'from-blue-200 to-transparent' },
+                            ]
+                            const colors = stepColors[idx % stepColors.length]
+
+                            return (
+                                <div key={idx} className={`relative p-6 rounded-2xl ${colors.bg} border-2 ${colors.border} transition-all duration-300 hover:shadow-lg hover:scale-105`}>
+                                    {/* Step number */}
+                                    <div className={`inline-flex items-center justify-center w-12 h-12 ${colors.number} rounded-full font-bold text-lg mb-4`}>
+                                        {idx + 1}
+                                    </div>
+
+                                    {/* Content */}
+                                    <h3 className={`text-xl font-bold mb-2 ${colors.text}`}>{step.title}</h3>
+                                    <p className="text-gray-600">{step.description}</p>
+
+                                    {/* Connector line */}
+                                    {idx < contributionSteps.length - 1 && (
+                                        <div className={`hidden lg:block absolute top-12 left-24 w-12 h-0.5 bg-linear-to-r ${colors.line}`} />
+                                    )}
                                 </div>
-
-                                {/* Content */}
-                                <h3 className="text-xl font-bold mb-2">{step.title}</h3>
-                                <p className="text-gray-300">{step.description}</p>
-
-                                {/* Connector line */}
-                                {idx < contributionSteps.length - 1 && (
-                                    <div className="hidden lg:block absolute top-6 left-20 w-12 h-0.5 bg-linear-to-r from-white/20 to-transparent" />
-                                )}
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
 
                     {/* CTA Button */}
                     <div className="text-center">
-                        <button className="px-8 py-3.5 bg-white text-black font-medium rounded-full hover:bg-gray-100 transition-colors duration-200">
+                        <button className="px-8 py-3.5 bg-linear-to-r from-emerald-600 to-teal-500 text-white font-medium rounded-full hover:from-emerald-700 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
                             Start Contributing Today
                         </button>
                     </div>
