@@ -37,11 +37,11 @@ export function Lightbox({ image, currentIndex, totalImages, onClose, onNavigate
                 {/* Lightbox Content */}
                 <div className="p-4 sm:p-6 space-y-6">
                     {/* Main Image */}
-                    <div className="bg-slate-100 rounded-lg overflow-hidden">
+                    <div className="bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center" style={{ minHeight: '300px', maxHeight: '60vh' }}>
                         <img
                             src={image.url}
                             alt={`${image.species} - ${image.location}`}
-                            className="w-full h-auto max-h-96 object-cover"
+                            className="w-full h-full object-contain"
                         />
                     </div>
 
