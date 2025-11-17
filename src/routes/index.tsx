@@ -166,6 +166,7 @@ function Index() {
                         {speciesCategories.map((category, idx) => (
                             <div
                                 key={idx}
+                                onClick={() => navigate({ to: '/gallery' })}
                                 className={`group p-8 rounded-2xl bg-linear-to-br ${category.color} border border-gray-200 hover:border-gray-300 hover:shadow-lg transition-all duration-300 cursor-pointer`}
                             >
                                 <div className="text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">{category.icon}</div>
@@ -197,8 +198,8 @@ function Index() {
                         {contributionSteps.map((step, idx) => {
                             // Color scheme matching your map hotspots (excluding red)
                             const stepColors = [
-                                { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600', number: 'bg-orange-100 text-orange-700', line: 'from-orange-200 to-transparent' },
                                 { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600', number: 'bg-emerald-100 text-emerald-700', line: 'from-emerald-200 to-transparent' },
+                                { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600', number: 'bg-orange-100 text-orange-700', line: 'from-orange-200 to-transparent' },
                                 { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-600', number: 'bg-cyan-100 text-cyan-700', line: 'from-cyan-200 to-transparent' },
                                 { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-600', number: 'bg-blue-100 text-blue-700', line: 'from-blue-200 to-transparent' },
                             ]
@@ -226,7 +227,7 @@ function Index() {
 
                     {/* CTA Button */}
                     <div className="text-center">
-                        <button className="px-8 py-3.5 bg-linear-to-r from-emerald-600 to-teal-500 text-white font-medium rounded-full hover:from-emerald-700 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
+                        <button onClick={() => navigate({ to: '/upload' })} className="px-8 py-3.5 bg-linear-to-r from-emerald-600 to-teal-500 text-white font-medium rounded-full hover:from-emerald-700 hover:to-teal-600 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105">
                             Start Contributing Today
                         </button>
                     </div>

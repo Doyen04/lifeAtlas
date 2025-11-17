@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useRef } from 'react'
 import type { UploadStep, ImageData } from '../types/upload'
 import {
@@ -19,6 +19,7 @@ function Upload() {
     const [images, setImages] = useState<ImageData[]>([])
     const [uploadError, setUploadError] = useState('')
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    const navigate = useNavigate()
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -108,12 +109,12 @@ function Upload() {
             {/* Header */}
             <div className="bg-white border-b border-slate-200">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-                    <a href="/" className="inline-flex items-center gap-2 text-slate-600 hover:text-emerald-600 mb-4 sm:mb-5 transition-colors text-sm sm:text-base">
+                    <button onClick={() => navigate({ to: '/' })} className="inline-flex items-center gap-2 text-slate-600 hover:text-emerald-600 mb-4 sm:mb-5 transition-colors text-sm sm:text-base">
                         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
                         Back Home
-                    </a>
+                    </button>
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Share Your Wildlife Photo</h1>
                     <p className="text-slate-600 mt-2 sm:mt-3 text-sm sm:text-base">Help LifeAtlas grow by contributing wildlife photographs from around the world</p>
                 </div>

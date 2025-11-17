@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 const Auth = () => {
     const [authTab, setAuthTab] = useState('Login')
@@ -7,6 +7,7 @@ const Auth = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [fullName, setFullName] = useState('')
+    const navigate = useNavigate()
 
     return (
         <div className="relative flex min-h-screen w-full bg-white lg:h-screen">
@@ -22,21 +23,21 @@ const Auth = () => {
             <div className="absolute inset-0 lg:hidden bg-black/40"></div>
 
             {/* Back button - visible on mobile */}
-            <a href="/" className="lg:hidden fixed top-4 left-4 z-20 p-2 hover:bg-white/20 rounded-lg transition-colors flex gap-2 items-center font-bold text-white">
+            <button onClick={() => navigate({ to: '/' })} className="lg:hidden fixed top-4 left-4 z-20 p-2 hover:bg-white/20 rounded-lg transition-colors flex gap-2 items-center font-bold text-white">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 Back Home
-            </a>
+            </button>
 
             {/* Left Side - Desktop Hero Image */}
             <div className="hidden lg:flex lg:w-1/2 p-8 flex-col justify-start bg-emerald-50/60">
-                <a href="/" className="mb-4 p-2 hover:bg-emerald-100 rounded-lg transition-colors flex gap-2 items-center font-bold">
+                <button onClick={() => navigate({ to: '/' })} className="mb-4 p-2 hover:bg-emerald-100 rounded-lg transition-colors flex gap-2 items-center font-bold">
                     <svg className="w-6 h-6 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                     Back Home
-                </a>
+                </button>
                 <div
                     className="flex-1 bg-center bg-no-repeat bg-cover rounded-xl"
                     style={{
