@@ -43,7 +43,7 @@ export function BentoGrid({ tiles, onImageClick }: BentoGridProps) {
                                         {tile.image.species}
                                     </h3>
                                     <p className="text-white/90 text-xs mb-3">
-                                        📍 {tile.image.location}, {tile.image.country}
+                                        {tile.image.location}, {tile.image.country}
                                     </p>
                                     <div className="flex items-center justify-between text-xs text-white/80">
                                         <div className="flex gap-3">
