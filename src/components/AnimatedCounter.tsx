@@ -11,7 +11,7 @@ export function AnimatedCounter({ target }: { target: number }): JSX.Element {
 
     useEffect(() => {
         let current = 0
-        const increment = target / 50
+        const increment = target / 100
         const timer = setInterval(() => {
             current += increment
             if (current >= target) {

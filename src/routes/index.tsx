@@ -196,7 +196,6 @@ function Index() {
                     {/* Steps Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                         {contributionSteps.map((step, idx) => {
-                            // Color scheme matching your map hotspots (excluding red)
                             const stepColors = [
                                 { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-600', number: 'bg-emerald-100 text-emerald-700', line: 'from-emerald-200 to-transparent' },
                                 { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-600', number: 'bg-orange-100 text-orange-700', line: 'from-orange-200 to-transparent' },
