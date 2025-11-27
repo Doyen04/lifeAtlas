@@ -1,5 +1,61 @@
 import type { ImageData, AnalysisResult } from '../types/upload'
 
+const ANALYZE_API_URL = 'http://127.0.0.1:8000/gemini/analyze' //'https://doyen04-atlasbackend.hf.space/gemini/analyze'
+const ANALYZE_PROMPT = 'You are an ecologist helping LifeAtlas catalog wildlife photos. Identify the primary species in each image and describe what you see.'
+const ANALYZE_RESPONSE_SCHEMA_JSON = JSON.stringify({
+    type: 'object',
+    properties: {
+        results: {
+            type: 'array',
+            items: {
+                type: 'object',
+                properties: {
+                    fileName: { type: 'string' },
+                    species: { type: ['string', 'null'] },
+                    description: { type: 'string' },
+                    confidence: { type: 'number' },
+                },
+                required: ['fileName', 'species', 'description', 'confidence'],
+            },
+        },
+    },
+    required: ['results'],
+})
+
+type BackendAnalysisResult = {
+    fileName?: string
+    filename?: string
+    name?: string
+    species?: string | null
+    description?: string | null
+    confidence?: number | null
+}
+
+type BackendGroupItem = {
+    index?: number
+    fileName?: string
+    filename?: string
+}
+
+type BackendAnalysisGroup = {
+    group?: string
+    count?: number
+    summary?: {
+        results?: BackendAnalysisResult[]
+    }
+    items?: BackendGroupItem[]
+}
+
+type BackendAnalysisResponse = {
+    prompt?: string
+    schema?: unknown
+    gemini_model?: string
+    total_images?: number
+    results?: BackendAnalysisResult[]
+    images?: BackendAnalysisResult[]
+    groups?: BackendAnalysisGroup[]
+}
+
 /**
  * Accepted image formats for upload
  */
@@ -95,29 +151,121 @@ export const MOCK_ANALYSIS_RESULTS: AnalysisResult[] = [
  * @returns Promise resolving to array of analyzed images
  */
 export const analyzeImages = async (images: ImageData[]): Promise<ImageData[]> => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            const updatedImages = images.map((img) => {
-                const isUnknown = Math.random() < 0.2
-                if (isUnknown) {
-                    return {
-                        ...img,
-                        analysis: null,
-                        isUnknown: true,
-                        species: '',
+    if (!images.length) {
+        return images
+    }
+
+    const formData = new FormData()
+    formData.append('prompt', ANALYZE_PROMPT)
+    formData.append('schema_json', ANALYZE_RESPONSE_SCHEMA_JSON)
+
+    images.forEach((image) => {
+        formData.append('files', image.file, image.file.name)
+    })
+
+    const response = await fetch(ANALYZE_API_URL, {
+        method: 'POST',
+        body: formData,
+    })
+
+    if (!response.ok) {
+        throw new Error(`Image analysis failed with status ${response.status}`)
+    }
+
+    const payload = (await response.json()) as BackendAnalysisResponse
+    const resultMap = new Map<string, BackendAnalysisResult>()
+    const groupIndexMap = new Map<number, BackendAnalysisResult>()
+
+    const ingestResult = (result?: BackendAnalysisResult) => {
+        if (!result) {
+            return
+        }
+        const key = result.fileName ?? result.filename ?? result.name
+        if (key) {
+            resultMap.set(key, result)
+        }
+    }
+
+    if (Array.isArray(payload.results)) {
+        payload.results.forEach(ingestResult)
+    }
+
+    if (Array.isArray(payload.images)) {
+        payload.images.forEach(ingestResult)
+    }
+
+    if (Array.isArray(payload.groups)) {
+        payload.groups.forEach((group) => {
+            const results = group.summary?.results ?? []
+            const items = group.items ?? []
+
+            results.forEach(ingestResult)
+
+            items.forEach((item, itemIdx) => {
+                const matchedResult = (() => {
+                    const byFilename = results.find((result) => {
+                        const resName = result.fileName ?? result.filename ?? result.name
+                        return !!resName && (resName === item.filename || resName === item.fileName)
+                    })
+                    if (byFilename) {
+                        return byFilename
                     }
-                } else {
-                    const result = MOCK_ANALYSIS_RESULTS[Math.floor(Math.random() * MOCK_ANALYSIS_RESULTS.length)]
-                    return {
-                        ...img,
-                        analysis: result,
-                        species: result.species,
-                        isUnknown: false,
+                    if (results[itemIdx]) {
+                        return results[itemIdx]
                     }
+                    return results[0]
+                })()
+
+                if (!matchedResult) {
+                    return
+                }
+
+                const normalizedFileName = item.filename ?? item.fileName ?? matchedResult.fileName ?? matchedResult.filename ?? matchedResult.name
+                if (normalizedFileName) {
+                    const normalizedResult = {
+                        ...matchedResult,
+                        fileName: normalizedFileName,
+                    }
+                    ingestResult(normalizedResult)
+
+                    if (typeof item.index === 'number') {
+                        groupIndexMap.set(item.index, normalizedResult)
+                    }
+                } else if (typeof item.index === 'number') {
+                    groupIndexMap.set(item.index, matchedResult)
                 }
             })
-            resolve(updatedImages)
-        }, 2000)
+        })
+    }
+
+    return images.map((image, idx) => {
+        const match = resultMap.get(image.file.name) ?? groupIndexMap.get(idx)
+
+        if (!match || !match.species) {
+            return {
+                ...image,
+                analysis: null,
+                isUnknown: true,
+                species: '',
+            }
+        }
+
+        const normalizedConfidence = typeof match.confidence === 'number'
+            ? (match.confidence <= 1 ? Math.round(match.confidence * 100) : Math.round(match.confidence))
+            : 0
+
+        const analysis: AnalysisResult = {
+            species: match.species,
+            description: match.description ?? '',
+            confidence: Math.max(0, Math.min(100, normalizedConfidence)),
+        }
+
+        return {
+            ...image,
+            analysis,
+            species: analysis.species,
+            isUnknown: false,
+        }
     })
 }
 
