@@ -1,6 +1,6 @@
 import type { ImageData, AnalysisResult } from '../types/upload'
 
-const ANALYZE_API_URL = 'http://127.0.0.1:8000/gemini/analyze' //'https://doyen04-atlasbackend.hf.space/gemini/analyze'
+const ANALYZE_API_URL = 'https://doyen04-atlasbackend.hf.space/gemini/analyze'
 const ANALYZE_PROMPT = 'You are an ecologist helping LifeAtlas catalog wildlife photos. Identify the primary species in each image and describe what you see.'
 const ANALYZE_RESPONSE_SCHEMA_JSON = JSON.stringify({
     type: 'object',
